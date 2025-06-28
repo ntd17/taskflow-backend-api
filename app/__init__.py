@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_restx import Api
@@ -29,6 +29,6 @@ def create_app():
 
     @app.route('/')
     def index():
-        return {'message': 'Welcome to TaskFlow API'}
+        return render_template('index.html')
 
     return app
