@@ -4,8 +4,9 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt gunicorn
+RUN apt-get update && apt-get install -y curl && \
+    pip install --no-cache-dir -r requirements.txt gunicorn
 
 COPY . .
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "--preload", "main:app"]
+CMD ["python", "main.py"]
