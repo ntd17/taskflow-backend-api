@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: taskflow
+      POSTGRES_USER: taskflow
+      POSTGRES_PASSWORD: changeme
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  backend:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://taskflow:changeme@db:5432/taskflow
+      FLASK_ENV: development
+      SECRET_KEY: supersecretkey
+      JWT_SECRET_KEY: jwt-secret-string
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+volumes:
+  pgdata:
